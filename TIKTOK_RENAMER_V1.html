@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Date Extractor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .description {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(240, 147, 251, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        textarea:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+            font-family: monospace;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-process {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-process:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-process:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-clear {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 10px 20px rgba(240, 147, 251, 0.3);
+        }
+
+        .btn-clear:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(240, 147, 251, 0.4);
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-copy:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(79, 172, 254, 0.4);
+        }
+
+        .output {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(168, 237, 234, 0.3);
+        }
+
+        .output h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.3em;
+        }
+
+        .results {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .error {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: #721c24;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(255, 154, 158, 0.3);
+        }
+
+        .success {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #155724;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(168, 237, 234, 0.3);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                flex: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 TikTok Date Extractor</h1>
+        
+        <div class="description">
+            <strong>How to use:</strong><br>
+            1. Paste your TikTok URLs (one per line) in the text area below<br>
+            2. Enter the OP name (will be converted to uppercase)<br>
+            3. Click "Process URLs" to extract dates and generate formatted names<br>
+            4. Copy the results for your use
+        </div>
+
+        <div class="form-group">
+            <label for="urls">TikTok URLs (paste one per line):</label>
+            <textarea 
+                id="urls" 
+                placeholder="https://www.tiktok.com/@username/video/1234567890
+https://www.tiktok.com/@username/video/9876543210
+...or paste a table with URLs in it"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="opName">OP Name:</label>
+            <input type="text" id="opName" placeholder="Enter OP name (will be converted to uppercase)" />
+        </div>
+
+        <div class="button-group">
+            <button class="btn-process" onclick="processUrls()">Process URLs</button>
+            <button class="btn-clear" onclick="clearAll()">Clear All</button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Processing URLs...</p>
+        </div>
+
+        <div id="output" class="output" style="display: none;">
+            <h3>Generated File Names:</h3>
+            <div class="results" id="results"></div>
+            <button class="btn-copy" onclick="copyResults()">Copy Results</button>
+        </div>
+    </div>
+
+    <script>
+        function extractTikTokId(url) {
+            // Extract TikTok video ID from URL
+            const match = url.match(/\/video\/(\d+)/);
+            return match ? match[1] : null;
+        }
+
+        function extractDateFromTikTokId(videoId) {
+            try {
+                // Convert video ID to integer
+                const id = BigInt(videoId);
+                
+                // Convert to binary string (64 bits)
+                const binaryStr = id.toString(2).padStart(64, '0');
+                
+                // Get first 32 bits
+                const first32Bits = binaryStr.substring(0, 32);
+                
+                // Convert first 32 bits to decimal (Unix timestamp)
+                const timestamp = parseInt(first32Bits, 2);
+                
+                // Convert Unix timestamp to Date
+                const date = new Date(timestamp * 1000);
+                
+                // Format as YYMMDD
+                const year = date.getFullYear().toString().substring(2);
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                
+                return year + month + day;
+            } catch (error) {
+                console.error('Error extracting date from ID:', videoId, error);
+                return null;
+            }
+        }
+
+        function showError(message) {
+            const output = document.getElementById('output');
+            output.style.display = 'block';
+            output.innerHTML = `<div class="error">Error: ${message}</div>`;
+        }
+
+        function showSuccess(message) {
+            const output = document.getElementById('output');
+            const existingResults = document.getElementById('results');
+            if (existingResults) {
+                const successDiv = document.createElement('div');
+                successDiv.className = 'success';
+                successDiv.textContent = message;
+                output.insertBefore(successDiv, existingResults);
+            }
+        }
+
+        function processUrls() {
+            const urlsText = document.getElementById('urls').value.trim();
+            const opName = document.getElementById('opName').value.trim().toUpperCase();
+
+            if (!urlsText) {
+                showError('Please paste some TikTok URLs');
+                return;
+            }
+
+            if (!opName) {
+                showError('Please enter an OP name');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('output').style.display = 'none';
+
+            // Extract URLs from text (handle various formats)
+            const lines = urlsText.split('\n');
+            const urls = [];
+            
+            lines.forEach(line => {
+                // Look for TikTok URLs in the line
+                const urlMatches = line.match(/https:\/\/(?:www\.)?tiktok\.com\/[^\s]*/g);
+                if (urlMatches) {
+                    urls.push(...urlMatches);
+                }
+            });
+
+            if (urls.length === 0) {
+                document.getElementById('loading').style.display = 'none';
+                showError('No valid TikTok URLs found in the input');
+                return;
+            }
+
+            // Process URLs with a slight delay to show loading
+            setTimeout(() => {
+                try {
+                    const results = [];
+                    let counter = 1;
+
+                    urls.forEach(url => {
+                        const videoId = extractTikTokId(url);
+                        if (videoId) {
+                            const date = extractDateFromTikTokId(videoId);
+                            if (date) {
+                                const fileName = `6PC_${date}_OP${opName}_TIKTOK_${counter.toString().padStart(3, '0')}`;
+                                results.push(fileName);
+                                counter++;
+                            }
+                        }
+                    });
+
+                    document.getElementById('loading').style.display = 'none';
+
+                    if (results.length > 0) {
+                        const output = document.getElementById('output');
+                        const resultsDiv = document.getElementById('results');
+                        
+                        output.style.display = 'block';
+                        resultsDiv.textContent = results.join('\n');
+                        
+                        showSuccess(`Successfully processed ${results.length} URLs`);
+                    } else {
+                        showError('No valid TikTok video IDs could be extracted from the URLs');
+                    }
+                } catch (error) {
+                    document.getElementById('loading').style.display = 'none';
+                    showError('An error occurred while processing the URLs: ' + error.message);
+                }
+            }, 500);
+        }
+
+        function copyResults() {
+            const results = document.getElementById('results').textContent;
+            navigator.clipboard.writeText(results).then(() => {
+                // Temporarily change button text
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.background = 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = results;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                showSuccess('Results copied to clipboard!');
+            });
+        }
+
+        function clearAll() {
+            document.getElementById('urls').value = '';
+            document.getElementById('opName').value = '';
+            document.getElementById('output').style.display = 'none';
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Allow Enter key in textarea but process with Ctrl+Enter
+        document.getElementById('urls').addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.key === 'Enter') {
+                processUrls();
+            }
+        });
+
+        // Process when Enter is pressed in OP name field
+        document.getElementById('opName').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                processUrls();
+            }
+        });
+    </script>
+</body>
+</html>
