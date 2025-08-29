@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
             min-height: 100vh;
             padding: 20px;
             line-height: 1.6;
@@ -46,19 +46,19 @@
             text-align: center;
             margin-bottom: 30px;
             font-size: 2.5em;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #6c757d, #495057);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .description {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
             color: white;
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 20px rgba(240, 147, 251, 0.3);
+            box-shadow: 0 10px 20px rgba(108, 117, 125, 0.3);
         }
 
         .form-group {
@@ -85,8 +85,8 @@
 
         textarea:focus, input[type="text"]:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #6c757d;
+            box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.1);
             transform: translateY(-2px);
         }
 
@@ -116,14 +116,14 @@
         }
 
         .btn-process {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
             color: white;
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 20px rgba(108, 117, 125, 0.3);
         }
 
         .btn-process:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 15px 30px rgba(108, 117, 125, 0.4);
         }
 
         .btn-process:disabled {
@@ -134,33 +134,33 @@
         }
 
         .btn-clear {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #868e96 0%, #6c757d 100%);
             color: white;
-            box-shadow: 0 10px 20px rgba(240, 147, 251, 0.3);
+            box-shadow: 0 10px 20px rgba(134, 142, 150, 0.3);
         }
 
         .btn-clear:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(240, 147, 251, 0.4);
+            box-shadow: 0 15px 30px rgba(134, 142, 150, 0.4);
         }
 
         .btn-copy {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #adb5bd 0%, #868e96 100%);
             color: white;
-            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+            box-shadow: 0 10px 20px rgba(173, 181, 189, 0.3);
         }
 
         .btn-copy:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(79, 172, 254, 0.4);
+            box-shadow: 0 15px 30px rgba(173, 181, 189, 0.4);
         }
 
         .output {
             margin-top: 30px;
             padding: 20px;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
             border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(168, 237, 234, 0.3);
+            box-shadow: 0 10px 20px rgba(233, 236, 239, 0.3);
         }
 
         .output h3 {
@@ -182,21 +182,21 @@
         }
 
         .error {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            background: linear-gradient(135deg, #f8d7da 0%, #f1aeb5 100%);
             color: #721c24;
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 20px rgba(255, 154, 158, 0.3);
+            box-shadow: 0 10px 20px rgba(248, 215, 218, 0.3);
         }
 
         .success {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            color: #155724;
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+            color: #0c5460;
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 20px rgba(168, 237, 234, 0.3);
+            box-shadow: 0 10px 20px rgba(209, 236, 241, 0.3);
         }
 
         .loading {
@@ -207,7 +207,7 @@
 
         .spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+            border-top: 4px solid #6c757d;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -242,7 +242,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎵 TikTok Date Extractor</h1>
+        <h1>TikTok Date Extractor</h1>
         
         <div class="description">
             <strong>How to use:</strong><br>
@@ -264,6 +264,11 @@ https://www.tiktok.com/@username/video/9876543210
         <div class="form-group">
             <label for="opName">OP Name:</label>
             <input type="text" id="opName" placeholder="Enter OP name (will be converted to uppercase)" />
+        </div>
+
+        <div class="form-group">
+            <label for="startNumber">Starting Number (1-999):</label>
+            <input type="text" id="startNumber" placeholder="Enter starting number (default: 1)" value="1" />
         </div>
 
         <div class="button-group">
@@ -339,6 +344,7 @@ https://www.tiktok.com/@username/video/9876543210
         function processUrls() {
             const urlsText = document.getElementById('urls').value.trim();
             const opName = document.getElementById('opName').value.trim().toUpperCase();
+            const startNumberText = document.getElementById('startNumber').value.trim();
 
             if (!urlsText) {
                 showError('Please paste some TikTok URLs');
@@ -348,6 +354,17 @@ https://www.tiktok.com/@username/video/9876543210
             if (!opName) {
                 showError('Please enter an OP name');
                 return;
+            }
+
+            // Validate and format starting number
+            let startNumber = 1;
+            if (startNumberText) {
+                const num = parseInt(startNumberText, 10);
+                if (isNaN(num) || num < 1 || num > 999) {
+                    showError('Starting number must be between 1 and 999');
+                    return;
+                }
+                startNumber = num;
             }
 
             // Show loading
@@ -376,7 +393,7 @@ https://www.tiktok.com/@username/video/9876543210
             setTimeout(() => {
                 try {
                     const results = [];
-                    let counter = 1;
+                    let counter = startNumber;
 
                     urls.forEach(url => {
                         const videoId = extractTikTokId(url);
@@ -439,6 +456,7 @@ https://www.tiktok.com/@username/video/9876543210
         function clearAll() {
             document.getElementById('urls').value = '';
             document.getElementById('opName').value = '';
+            document.getElementById('startNumber').value = '1';
             document.getElementById('output').style.display = 'none';
             document.getElementById('loading').style.display = 'none';
         }
